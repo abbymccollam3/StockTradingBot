@@ -6,7 +6,7 @@ import pathlib
 
 THIS_FILE_PATH = pathlib.Path(__file__).resolve() # file path
 NBS_DIR = THIS_FILE_PATH.parent
-REPO_DIR = THIS_FILE_PATH.parent
+REPO_DIR = NBS_DIR.parent
 DJANGO_BASE_DIR = REPO_DIR / "src"
 DJANGO_PROJECT_SETTINGS_NAME = 'cfehome'
 
