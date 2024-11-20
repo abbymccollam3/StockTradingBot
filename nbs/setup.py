@@ -15,6 +15,6 @@ def init_django():
     os.chdir(DJANGO_BASE_DIR) # root directory of project we will be working on
     sys.path.insert(0, str(DJANGO_BASE_DIR))
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cfehome.settings')
-    
+    os.environ['DJANGO_ALLOW_ASYNC_UNSAFE'] = 'true'
     import django
     django.setup()
