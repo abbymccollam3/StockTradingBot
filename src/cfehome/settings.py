@@ -83,8 +83,6 @@ if DATABASE_URL != "":
             default=DATABASE_URL,
             conn_max_age=300,
             engine='timescale.db.backends.postgresql',
-            #PORT='5431',
-            #HOST: '127.0.0.1',
         )
     }   
 
