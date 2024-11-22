@@ -3,5 +3,5 @@ from ._polygon import PolygonAPIClient
 
 __all__ = [
     "AlphaVantageAPIClient",
-    "PolygonAPIClient",
+    "PolygonAPIClient"
 ]
