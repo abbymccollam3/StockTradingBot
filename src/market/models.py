@@ -43,5 +43,9 @@ class StockQuote(models.Model):
     volume_weighted_average = models.DecimalField(max_digits=10, decimal_places=4)
     time = TimescaleDateTimeField(interval="1 week")
 
-    # objects = models.Manager()
+    objects = models.Manager()
     timescale = TimescaleManager()
+
+    # makes sure objects are unique
+    class Meta:
+        unique_together = [('company', 'time')]
