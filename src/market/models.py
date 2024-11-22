@@ -1,5 +1,8 @@
 from django.db import models
 
+from timescale.db.models.fields import TimescaleDateTimeField
+from timescale.db.models.managers import TimescaleManager
+
 # Create your models here.
 class Company(models.Model):
     name = models.CharField(max_length=120)
