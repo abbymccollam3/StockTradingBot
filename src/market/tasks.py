@@ -1,28 +1,39 @@
 from django.apps import apps
+from django.utils import timezone
+from datetime import timedelta
 
-def batch_insert_stock_data(dataset, company_obj=None, batch_size=1000):
-    StockQuote = apps.get_model('market', 'StockQuote')
-    batch_size = 1000
-    if company_obj is None:
-        return
-    for i in range(0, len(dataset), batch_size):
-        batch_chunk = dataset [i:i+batch_size]
-        chunked_quotes = []
-        for data in batch_chunk:
-            chunked_quotes.append( 
-                StockQuote(company=company_obj, **data)
-            )
-        
-        StockQuote.objects.bulk_create(chunked_quotes, ignore_conflicts=True)
+from .utils import batch_insert_stock_data
 
-def sync_company_stock_quotes(company_id):
+import helpers.clients as helper_clients
+
+def sync_company_stock_quotes(company_id, days_ago = 32, date_format = "%Y-%m-%d", verbose = False):
     Company = apps.get_model("market", "Company")
     try:
         company_obj = Company.objects.get(id=company_id)
     except:
         company_obj = None
     if company_obj is None:
-        return
+        raise Exception(f"Company ID: {company_id} is invalid")
+    company_ticker = company_obj.ticker
+
+    if company_ticker is None:
+        raise Exception(f"Company ticker: {company_ticker} is invalid")
+    end_date = timezone.now()
+    start_date = end_date - timedelta(days=days_ago)
+
+
+
+    to_date = end_date.strftime(date_format)
+    from_date = start_date.strftime(date_format)
+    client = helper_clients.PolygonAPIClient(
+        ticker=company_ticker,
+        from_date=from_date,
+        to_date=to_date
+    )
+    dataset = client.get_stock_data()
+    if verbose:
+        print('dataset length', len(dataset))
+    batch_insert_stock_data(dataset=dataset, company_obj=company_obj, verbose=verbose)
 
 def sync_stock_data():
     Company = apps.get_model("market", "Company")
