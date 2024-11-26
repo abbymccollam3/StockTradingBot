@@ -75,7 +75,7 @@ class PolygonAPIClient:
         data = self.perform_request() # making GET request to Polygon API
         results = data.get('results') or None # accesses results key in data dictionary 
         if results is None:
-            raise Exception(f"{self.ticker} has no results")
+            raise Exception(f"Ticker {self.ticker} has no results")
         dataset = []
         for result in results: # calls function on each results and stores in dataset
             dataset.append(
