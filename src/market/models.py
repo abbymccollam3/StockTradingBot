@@ -12,6 +12,10 @@ class Company(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updates = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        self.ticker = f"{self.ticker}".upper()
+        super().save(*args, **kwargs)
+
 # defining database 
 
 # stock market tickers can change
