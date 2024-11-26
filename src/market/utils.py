@@ -1,11 +1,15 @@
 from django.apps import apps
 
 
-def batch_insert_stock_data(dataset, company_obj=None, batch_size=1000, verbose=False):
+def batch_insert_stock_data(
+        dataset, 
+        company_obj=None, 
+        batch_size=1000, 
+        verbose=False):
     StockQuote = apps.get_model('market', 'StockQuote')
     batch_size = 1000
     if company_obj is None:
-        return
+        raise Exception(f"Batch failed. Company object: {company_obj} is invalid")
     for i in range(0, len(dataset), batch_size):
         if verbose:
             print("Doing chunk", i)
