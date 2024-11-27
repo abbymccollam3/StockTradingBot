@@ -18,14 +18,15 @@ class StockQuoteAdmin(admin.ModelAdmin):
         ('time', DateTimeRangeFilterBuilder()), # custom filter
         'time'
     ]
-    readonly_fields = ['localized_time', 'time']
+    readonly_fields = ['localized_time', 'time', 'display_raw_time', 'raw_timestamp']
 
     def localized_time(self, obj):
         tz_name = "US/Eastern"
         user_tz = zoneinfo.ZoneInfo(tz_name)
         local_time = obj.time.astimezone(user_tz)
         return local_time.strftime("%b %d, %Y, %I:%M %p (%Z)")
-    
+        
+
     def get_queryset(self, request):
         tz_name = "US/Eastern"
         tz_name = "UTC"
