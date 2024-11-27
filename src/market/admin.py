@@ -13,7 +13,7 @@ class StockQuoteAdmin(admin.ModelAdmin):
 
     def localized_time(self, obj):
         tz_name = "US/Eastern"
-        user_tz = zoneinfo.Zoneinfo(tz_name)
+        user_tz = zoneinfo.ZoneInfo(tz_name)
         local_time = obj.time.astimezone(user_tz)
         return local_time.strftime("%b %d, %Y, %I:%M %p (%Z)")
 
