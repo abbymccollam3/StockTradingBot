@@ -23,6 +23,7 @@ def sync_company_stock_quotes(company_id, days_ago = 32, date_format = "%Y-%m-%d
     now = timezone.now()
     start_date = now - timedelta(days=days_ago)
     to_date = start_date + timedelta(days=days_ago + 1)
+    to_date = to_date.strftime(date_format)
     from_date = start_date.strftime(date_format)
     client = helper_clients.PolygonAPIClient(
         ticker=company_ticker,
@@ -49,7 +50,7 @@ def sync_historical_stock_data(years_ago=5, company_ids=[]):
         qs = qs.filter(id__in=company_ids)
     companies = qs.values_list('id', flat=True)    
     for company_id in companies:
-        days_starting_ago = 30*12*years_ago
+        days_starting_ago = 30 * 12 * years_ago
         batch_size = 30
         for i in range(30, days_starting_ago, batch_size):
             sync_company_stock_quotes.delay(company_id, days_ago=i)  
