@@ -48,6 +48,7 @@ class PolygonAPIClient:
         return {
             "adjusted" : self.adjusted,
             "sort" : self.sort,
+            # "limit": 50_000,
         }
 
     def generate_url(self, pass_auth=False):
