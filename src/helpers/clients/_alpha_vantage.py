@@ -21,6 +21,8 @@ def transform_alpha_vantage_result(timestamp_str, result_val):
      'high_price': Decimal(result_val['2. high']),
      'low_price': Decimal(result_val['3. low']),
      'volume': int(result_val['5. volume']),
+     'volume_weighted_average': None,
+     'raw_timestamp': timestamp_str,
      'time': timestamp,
     }
 
