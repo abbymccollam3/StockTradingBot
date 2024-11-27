@@ -18,7 +18,7 @@ class StockQuoteAdmin(admin.ModelAdmin):
         ('time', DateTimeRangeFilterBuilder()), # custom filter
         'time'
     ]
-
+    readonly_fields = ['localized_time', 'time']
 
     def localized_time(self, obj):
         tz_name = "US/Eastern"
@@ -28,6 +28,7 @@ class StockQuoteAdmin(admin.ModelAdmin):
     
     def get_queryset(self, request):
         tz_name = "US/Eastern"
+        tz_name = "UTC"
         user_tz = zoneinfo.ZoneInfo(tz_name)
         timezone.activate(user_tz)
         return super().get_queryset(request)
