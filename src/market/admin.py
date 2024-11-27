@@ -1,3 +1,4 @@
+import zoneinfo
 from django.contrib import admin
 
 # Register your models here.
@@ -11,7 +12,10 @@ class StockQuoteAdmin(admin.ModelAdmin):
     list_filter = ['company__ticker', 'time']
 
     def localized_time(self, obj):
-        return obj.time.strftime("%b %d, %Y, %I:%M %p (%Z)")
+        tz_name = "US/Eastern"
+        user_tz = zoneinfo.Zoneinfo(tz_name)
+        local_time = obj.time.astimezone(user_tz)
+        return local_time.strftime("%b %d, %Y, %I:%M %p (%Z)")
 
     # class Meta:
     #     model = StockQuote
