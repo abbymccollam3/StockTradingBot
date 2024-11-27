@@ -10,3 +10,4 @@ Celery
 Redis
 django-celery-beat
 django-celery-results
+django-admin-interface
