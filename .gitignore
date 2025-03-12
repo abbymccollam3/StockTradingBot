@@ -6,6 +6,8 @@ __pycache__/
 # C extensions
 *.so
 
+update-git-history.sh
+
 # Distribution / packaging
 .Python
 build/
